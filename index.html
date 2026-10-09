@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Чотири світи</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img{max-width:100%}
+
+/* Reference card: eyebrow → case → axes → grid → questions → indicators → procedure → cautions */
+:root{
+  --bg:#F7F5F0; --surface:#FFFFFF; --surface-2:#EDE7DC;
+  --fg:#1C2B3A; --muted:#55616B; --line:#DED8CC;
+  --accent:#A84A1A; --teal:#2E6F7E;
+  --zone-go:#E2EDEF; --zone-hold:#F1EDE4; --zone-stop:#F6E5DB;
+  --serif:'Source Serif 4', Georgia, serif;
+  --sans:'IBM Plex Sans', system-ui, -apple-system, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#121C26; --surface:#1C2B3A; --surface-2:#24354A;
+  --fg:#F0EDE6; --muted:#9FAEBB; --line:#2F4256;
+  --accent:#E8995F; --teal:#78BAC7;
+  --zone-go:#1B3A43; --zone-hold:#2A3444; --zone-stop:#3B2619;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#121C26; --surface:#1C2B3A; --surface-2:#24354A;
+  --fg:#F0EDE6; --muted:#9FAEBB; --line:#2F4256;
+  --accent:#E8995F; --teal:#78BAC7;
+  --zone-go:#1B3A43; --zone-hold:#2A3444; --zone-stop:#3B2619;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--fg); font-family:var(--sans); line-height:1.5;
+  padding-inline:20px; padding-block:40px 64px}
+.wrap{max-width:820px; margin:0 auto; display:flex; flex-direction:column; gap:40px}
+.wrap>*{min-width:0; max-width:100%}
+.eyebrow{font-size:13px; font-weight:600; letter-spacing:.11em; text-transform:uppercase; color:var(--accent); margin:0}
+h1{font-family:var(--serif); font-size:clamp(34px,7vw,48px); font-weight:600; line-height:1.1;
+  margin:10px 0 0; text-wrap:balance}
+.lead{font-family:var(--serif); font-size:clamp(20px,4vw,25px); line-height:1.35; margin:14px 0 0; color:var(--muted)}
+h2{font-size:13px; font-weight:600; letter-spacing:.11em; text-transform:uppercase;
+  color:var(--muted); margin:0 0 14px; padding-bottom:8px; border-bottom:1px solid var(--line)}
+h3{font-size:17px; font-weight:600; margin:0}
+p{margin:0}
+.intro{font-size:16px; line-height:1.55; margin-bottom:16px}
+.case{background:var(--surface-2); border-radius:12px; padding:22px;
+  display:flex; flex-direction:column; gap:11px}
+.case p{font-size:15.5px; line-height:1.55; color:var(--muted)}
+.case .pull{font-family:var(--serif); font-size:clamp(18px,3.4vw,21px); line-height:1.35; color:var(--fg)}
+.rules{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px}
+.rule{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:19px;
+  display:flex; flex-direction:column; gap:7px; min-width:0}
+.rule .n{font-family:var(--serif); font-size:24px; font-weight:700; color:var(--accent); line-height:1}
+.rule p{font-size:14.5px; color:var(--muted); line-height:1.45}
+.rule.key{border-color:var(--accent); background:var(--surface-2)}
+.gridwrap{overflow-x:auto; max-width:100%}
+.m{display:grid; gap:8px; min-width:500px; grid-template-columns:136px 1fr 1fr}
+.cell{border-radius:11px; padding:16px 15px; display:flex; flex-direction:column; gap:10px; min-width:0}
+.quad{background:var(--surface); border:1px solid var(--line)}
+.quad .combo{font-size:14.5px; color:var(--muted); line-height:1.4}
+.slot{border:1px dashed var(--accent); border-radius:8px; padding:8px 10px; font-size:12px;
+  font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:var(--accent); text-align:center}
+.rowlab,.collab{font-size:13px; font-weight:600; color:var(--muted); display:flex; align-items:center; min-width:0}
+.collab{justify-content:center; text-align:center; padding-bottom:2px; line-height:1.25}
+.rowlab{padding-right:10px; line-height:1.3}
+ol{margin:0; padding-left:22px; display:flex; flex-direction:column; gap:10px; font-size:16px}
+ol li::marker{color:var(--accent); font-weight:700}
+.two{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:14px}
+.note{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:20px;
+  display:flex; flex-direction:column; gap:8px; min-width:0}
+.note .tag{font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase}
+.note p{font-size:15px; color:var(--muted); line-height:1.5}
+.note .quote{font-family:var(--serif); font-size:17px; line-height:1.35; color:var(--fg)}
+.sees .tag{color:var(--teal)} .blind .tag{color:var(--accent)}
+.check{margin-top:16px; font-size:15.5px; line-height:1.55}
+.forbo{border-left:4px solid var(--accent); background:var(--surface-2); border-radius:0 12px 12px 0;
+  padding:20px 22px; display:flex; flex-direction:column; gap:9px}
+.forbo .tag{font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--accent)}
+.forbo p{font-size:16px; line-height:1.5}
+footer{font-size:13px; color:var(--muted); line-height:1.5; border-top:1px solid var(--line); padding-top:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Модуль I · Блок 2 · Сценарна вправа</p>
+  <h1>Чотири світи</h1>
+  <p class="lead">Не вгадати майбутнє, а прожити чотири його версії</p>
+</header>
+
+<section>
+  <h2>Звідки це взялося</h2>
+  <div class="case">
+    <p>На початку 1970-х група П'єра Вака в Royal Dutch Shell не прогнозувала нафтову кризу. Вона змусила керівників <em>прожити</em> версію світу, де ціна на нафту різко зростає, а контроль переходить до країн-експортерів.</p>
+    <p>Коли це сталося 1973 року, Shell відреагувала швидше за конкурентів — не тому, що вгадала, а тому, що цей варіант уже був продуманий і не паралізував людей.</p>
+    <p class="pull">Прогноз читають. Сценарій проходять.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Як обрати дві осі</h2>
+  <p class="intro">Осі — це не теми, а невизначеності. Кожна має пройти три перевірки; якщо хоч одна не пройдена, сітка вийде мертвою.</p>
+  <div class="rules">
+    <div class="rule">
+      <span class="n">1</span>
+      <h3>Висока невизначеність</h3>
+      <p>Ви чесно не знаєте, куди воно піде. Якщо знаєте — це не вісь, це планова обставина.</p>
+    </div>
+    <div class="rule">
+      <span class="n">2</span>
+      <h3>Високий вплив</h3>
+      <p>Від цього залежить ваш бюджет і порядок денний. Інакше вийде цікаве обговорення ні про що.</p>
+    </div>
+    <div class="rule">
+      <span class="n">3</span>
+      <h3>Незалежність осей</h3>
+      <p>Осі не випливають одна з одної. Інакше два квадранти з чотирьох залишаться порожніми.</p>
+    </div>
+  </div>
+  <div class="two" style="margin-top:14px">
+    <div class="note blind">
+      <span class="tag">Не годиться як вісь</span>
+      <p class="quote">«Чи буде в нас гарна команда»</p>
+      <p>Це ваше рішення, а не невизначеність середовища. Усе, чим ви керуєте, з осей викреслюється.</p>
+    </div>
+    <div class="note sees">
+      <span class="tag">Пара на 2027–2030</span>
+      <p class="quote">Темп євроінтеграційних вимог × обсяг зовнішнього фінансування</p>
+      <p>Не священна. Якщо до вашої сесії одна з них перестала бути невизначеністю — беріть іншу пару.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Сітка: чотири світи без назв</h2>
+  <p class="intro">Квадранти підписувати не можна — назву дає група. Ведучий малює порожню сітку й комбінацію в кожній клітинці, не більше.</p>
+  <div class="gridwrap">
+    <div class="m">
+      <div></div>
+      <div class="collab">Вимоги йдуть<br>швидко</div>
+      <div class="collab">Вимоги<br>буксують</div>
+
+      <div class="rowlab">Зовнішні гроші<br>є</div>
+      <div class="cell quad">
+        <span class="combo">Встигати доводиться, але є чим</span>
+        <span class="slot">назва — ваша</span>
+      </div>
+      <div class="cell quad">
+        <span class="combo">Гроші є, тиску немає — найпідступніший</span>
+        <span class="slot">назва — ваша</span>
+      </div>
+
+      <div class="rowlab">Зовнішніх грошей<br>немає</div>
+      <div class="cell quad">
+        <span class="combo">Вимагають, але не фінансують</span>
+        <span class="slot">назва — ваша</span>
+      </div>
+      <div class="cell quad">
+        <span class="combo">Ні тиску, ні ресурсу — живемо самі</span>
+        <span class="slot">назва — ваша</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Чотири питання до свого світу</h2>
+  <p class="intro">Кожна група бере один квадрант і відповідає на всі чотири. Дванадцять хвилин на відповіді, дві — на презентацію решті.</p>
+  <div class="rules">
+    <div class="rule key">
+      <span class="n">1</span>
+      <h3>Як називається цей світ?</h3>
+      <p>Одна фраза, яку запам'ятають. Найважливіше питання — і його найчастіше пропускають. Світ без назви забувається за годину; світ під назвою «Європа за дверима, грошей нема» згадають і через півроку. Нудну назву відправляйте переназивати.</p>
+    </div>
+    <div class="rule">
+      <span class="n">2</span>
+      <h3>Що в ньому відбувається з нашими членами?</h3>
+      <p>Конкретно: з ким саме, у якій частині галузі, що в них змінюється. Не «буде важко».</p>
+    </div>
+    <div class="rule">
+      <span class="n">3</span>
+      <h3>Хто виграє, а хто зникає?</h3>
+      <p>Обидві половини обов'язкові. Відповідь тільки про переможців означає, що світ продумали наполовину.</p>
+    </div>
+    <div class="rule">
+      <span class="n">4</span>
+      <h3>Що робить асоціація, якщо живе саме тут?</h3>
+      <p>Дія, а не стан. «Адаптується» і «посилює роль» не рахуються.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Сигнальні індикатори</h2>
+  <p class="intro">Сценарій без індикаторів — це есе. До кожного світу потрібні 2–3 події, які ви реально побачите в новинах і які скажуть: ми в'їжджаємо сюди.</p>
+  <div class="two">
+    <div class="note blind">
+      <span class="tag">Так не формулюють</span>
+      <p class="quote">«Погіршення інвестклімату»</p>
+      <p>Нікому не зрозуміло, чи це вже сталося. Такий індикатор не спрацює ніколи.</p>
+    </div>
+    <div class="note sees">
+      <span class="tag">Так формулюють</span>
+      <p class="quote">«Дві з трьох наших експортних позицій підпали під нові вимоги»</p>
+      <p>Подія, яку видно ззовні і яку можна порахувати.</p>
+    </div>
+  </div>
+  <p class="check"><strong>Перевірка:</strong> двоє різних людей мають однаково відповісти «сталося чи ні». Якщо відповіді розходяться — індикатор переписують.</p>
+  <p class="check">Перегляд індикаторів ставлять пунктом порядку денного правління раз на квартал. <strong>Три хвилини, не година</strong> — це не стратегічна сесія, це рядок у регламенті між затвердженням протоколу і «різним».</p>
+</section>
+
+<section>
+  <h2>Як провести</h2>
+  <ol>
+    <li>Оберіть дві осі, що пройшли три перевірки. Сильній групі можна дати обрати осі самій.</li>
+    <li>Накресліть сітку. Квадранти не підписуйте — тільки комбінацію умов.</li>
+    <li>Чотири групи, по одному квадранту на кожну. <strong>12 хвилин</strong> на чотири питання.</li>
+    <li>По <strong>2 хвилини</strong> на презентацію. Назви світів виписуйте на стіну — до кінця сесії вони працюють як спільна мова.</li>
+    <li>До кожного світу — 2–3 сигнальні індикатори за правилом вище.</li>
+    <li>Поставте квартальний перегляд індикаторів у регламент правління. Без цього вправа вивітриться за місяць.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Чим корисна і де бреше</h2>
+  <div class="two">
+    <div class="note sees">
+      <span class="tag">Бачить краще за інших</span>
+      <p>Знімає параліч. Уже прожитий варіант не лякає — саме тому Shell і відреагувала швидше за всіх. Люди ухвалюють рішення не з аналітики, а з того, що вже встигли уявити.</p>
+    </div>
+    <div class="note blind">
+      <span class="tag">Сліпа пляма</span>
+      <p>Сценарій легко сплутати з прогнозом. Щойно група починає сперечатися, який світ «найімовірніший», вправа зіпсована: сенс у готовності до всіх чотирьох, а не у вгадуванні одного.</p>
+    </div>
+  </div>
+</section>
+
+<div class="forbo">
+  <span class="tag">Для бізнес-об'єднання</span>
+  <p>Найсильніший побічний ефект — спільна мова. Після вправи фраза «це сценарій Б» замінює півгодинну дискусію на правлінні. Заради цього варто витратити двадцять п'ять хвилин, навіть якщо жоден із чотирьох світів не справдиться дослівно. Він і не справдиться — справдиться щось між ними, і ви це впізнаєте.</p>
+</div>
+
+<footer>
+  Сценарне планування в теперішньому вигляді склала група П'єра Вака в Royal Dutch Shell наприкінці 1960-х — на початку 1970-х; сам Вак описав метод у двох статтях Harvard Business Review 1985 року. Сітка 2×2 на двох критичних невизначеностях — пізніше спрощення шелівського підходу, поширене через Global Business Network. Чотири питання, вимога назвати світ і квартальний перегляд індикаторів — адаптація під коротку сесію бізнес-об'єднання.
+</footer>
+
+</div>
+</body>
+</html>
